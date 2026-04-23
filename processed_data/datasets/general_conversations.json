@@ -1,0 +1,23 @@
+[
+  {"content": "Hi! I'm here to help you with anything related to your child's needs.", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Hello! How can I assist you regarding autism support today?", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Good morning! Do you want tips on supporting your autistic child today?", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Hey! I'm happy to guide you on strategies and resources for your child.", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Thank you for reaching out! Would you like advice or general information?", "metadata": {"type": "general", "language": "en"}},
+  {"content": "You're welcome! Feel free to ask about daily routines or learning tips for your child.", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Hi there! I'm here to answer any question you have about autism support.", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Hello! Would you like tips on communication strategies for your child?", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Good evening! How was your day with your child?", "metadata": {"type": "general", "language": "en"}},
+  {"content": "Hi! Let me know if you need resources for social or emotional support.", "metadata": {"type": "general", "language": "en"}},
+
+  {"content": "مرحباً! أنا هنا لمساعدتك في كل ما يخص احتياجات طفلك.", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "أهلاً! كيف يمكنني مساعدتك اليوم فيما يتعلق بدعم الأطفال المصابين بالتوحد؟", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "صباح الخير! هل تريد نصائح لدعم طفلك المصاب بالتوحد اليوم؟", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "مرحباً! يسعدني أن أوجهك إلى استراتيجيات وموارد مفيدة لطفلك.", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "شكراً لتواصلك معنا! هل ترغب في نصائح عملية أم معلومات عامة؟", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "على الرحب والسعة! يمكنك سؤالي عن الروتين اليومي أو نصائح التعلم لطفلك.", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "أهلاً بك! أنا هنا لأجيب على أي سؤال لديك عن دعم الأطفال المصابين بالتوحد.", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "مرحباً! هل ترغب في نصائح حول استراتيجيات التواصل لطفلك؟", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "مساء الخير! كيف كان يومك مع طفلك؟", "metadata": {"type": "general", "language": "ar"}},
+  {"content": "مرحباً! أخبرني إن كنت بحاجة إلى موارد للدعم الاجتماعي أو النفسي.", "metadata": {"type": "general", "language": "ar"}}
+]
