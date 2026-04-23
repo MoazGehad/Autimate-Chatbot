@@ -14,6 +14,17 @@ def clean_arabic_text(text: str) -> str:
     text = re.sub(r'uni[0-9A-F]{4}', '', text, flags=re.IGNORECASE)
     # Remove Tatweel (Kashida)
     text = re.sub(r'[\u0640]', '', text)
+    
+    # Normalize Alifs
+    text = re.sub(r'[أإآ]', 'ا', text)
+    # Normalize Hamzas (optional, depending on strictness, but often helps retrieval)
+    # text = re.sub(r'[ؤئ]', 'ء', text) 
+    
+    # Normalize Taa Marbuta to Haa (optional, but standard in some search)
+    # text = re.sub(r'ة', 'h', text) # simple transliteration or keep as is. 
+    # Better to keep 'ة' as 'ة' or 'ه' depending on strategy. 
+    # Let's just fix common issues like double spaces and weird chars.
+    
     # Remove extra spaces
     text = re.sub(r'\s+', ' ', text).strip()
     return text
@@ -49,11 +60,19 @@ def load_documents(directory: str) -> List[Document]:
                     docs = loader.load()
                     documents.extend(docs)
                 elif file.endswith(".json"):
-                    # Simple JSON loading assuming 'content' field or similar structure
-                    # For complex JSON tailored to this project, we might need custom logic
-                    # referencing the old json_reader.py if needed.
-                    # For now, let's treat it generically or skip if it's metadata.
-                     pass 
+                    # Load JSON documents if they follow a specific schema
+                    # Assuming list of dicts with 'content' key
+                    try:
+                        loader = JSONLoader(
+                            file_path=file_path,
+                            jq_schema='.[]',
+                            content_key='content',
+                            text_content=False
+                        )
+                        docs = loader.load()
+                        documents.extend(docs)
+                    except Exception as json_err:
+                        print(f"Error loading JSON {file_path}: {json_err}")
             except Exception as e:
                 print(f"Error loading {file_path}: {e}")
 
@@ -62,6 +81,9 @@ def load_documents(directory: str) -> List[Document]:
         doc.page_content = clean_text(doc.page_content)
         # Add metadata if needed
         doc.metadata["source"] = doc.metadata.get("source", "")
+        # Ensure source is string for compatibility
+        if isinstance(doc.metadata.get("source"), (list, dict)):
+             doc.metadata["source"] = str(doc.metadata["source"])
         
     return documents
 
@@ -70,7 +92,8 @@ def split_documents(documents: List[Document], chunk_size: int = 1000, chunk_ove
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
         # Optimized separators for Arabic to avoid improper cuts
-        separators=["\n\n", "\n", " ", "،", ".", ""],
+        # Prioritize paragraph breaks, then sentences, then phrases
+        separators=["\n\n", "\n", ".\s", "؟\s", "!\s", "،", " ", ""],
         length_function=len
     )
     return text_splitter.split_documents(documents)

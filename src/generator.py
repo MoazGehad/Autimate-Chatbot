@@ -40,8 +40,12 @@ def get_llm_pipeline():
     return llm, tokenizer
 
 class Generator:
-    def __init__(self):
-        self.llm, self.tokenizer = get_llm_pipeline()
+    def __init__(self, llm=None, tokenizer=None):
+        if llm and tokenizer:
+            self.llm = llm
+            self.tokenizer = tokenizer
+        else:
+            self.llm, self.tokenizer = get_llm_pipeline()
 
     def generate_response(self, query: str, context: list):
         # Format context

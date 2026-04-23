@@ -1,9 +1,31 @@
-import os
-import json
-from langchain_community.document_loaders import PyPDFLoader
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from cleaner import clean_text
+import re
 
+def clean_arabic_text(text: str) -> str:
+    if not isinstance(text, str):
+        return text
+    # Remove /uniXXXX and uniXXXX patterns
+    text = re.sub(r'/uni[0-9A-F]{4}', '', text, flags=re.IGNORECASE)
+    text = re.sub(r'uni[0-9A-F]{4}', '', text, flags=re.IGNORECASE)
+    # Remove Tatweel (Kashida)
+    text = re.sub(r'[\u0640]', '', text)
+    
+    # Normalize Alifs
+    text = re.sub(r'[أإآ]', 'ا', text)
+    
+    # Remove extra spaces
+    text = re.sub(r'\s+', ' ', text).strip()
+    return text
+
+def clean_text(text: str) -> str:
+    """General cleaning with specific Arabic handling if detected."""
+    # Basic cleanup
+    text = re.sub(r'\s+', ' ', text).strip()
+    
+    # Check if likely Arabic (simple heuristic)
+    if re.search(r'[\u0600-\u06FF]', text):
+        text = clean_arabic_text(text)
+        
+    return text
 
 def load_pdf(folder_path,language=None):
     documents = []
@@ -23,7 +45,7 @@ def split_documents(documents, chunk_size=1000, chunk_overlap=200):
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
         length_function=len,
-        separators=["\n\n", "\n", " ", ""]
+        separators=["\n\n", "\n", ".\s", "؟\s", "!\s", "،", " ", ""]
     )
     return text_splitter.split_documents(documents)
 def docs_to_json(documents, output_folder, output_filename):

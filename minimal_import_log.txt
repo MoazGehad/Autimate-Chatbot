@@ -1,0 +1,4 @@
+Checking minimal imports...
+Ragas import error: Unable to compare versions for numpy>=1.17: need=1.17 found=None. This is unusual. Consider reinstalling numpy.
+Datasets imported: 4.5.0
+Minimal imports check done.
